@@ -2,12 +2,13 @@ jQuery
 
 const subscriptionKey = document.getElementById('InputKey');
 const submitbtn = document.getElementById('submitForm');
-let imageUrl = document.getElementById("inputUrl");
+let imageUrl = document.getElementById("InputUrl");
 let responselist = document.querySelector(".list-group")
 
 
 submitbtn.addEventListener('click', function (params) {
   console.log('click');
+  console.log(imageUrl.value);
 
   const uriBase = 'https://westcentralus.api.cognitive.microsoft.com/face/v1.0/detect';
 
