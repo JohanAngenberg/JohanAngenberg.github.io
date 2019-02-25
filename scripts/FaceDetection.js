@@ -10,7 +10,6 @@ submitbtn.addEventListener('click', function (params) {
 
   const uriBase = 'https://westcentralus.api.cognitive.microsoft.com/face/v1.0/detect';
 
-  // available parameters age, gender, hair, makeup, headpose, occlusion, emotion
   var params = {
     'returnFaceId': 'true',
     'returnFaceLandmarks': 'false',
