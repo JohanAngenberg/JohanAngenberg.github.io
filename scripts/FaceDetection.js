@@ -1,43 +1,45 @@
 'use strict';
-
-const request = require('request');
+let imageUrl = $()
+//const request = require('request');
 
 //Insert apikey below
 const subscriptionKey = document.getElementById('#InputKey');
-const submitbtn = document.getElementById('#submitForm')
+const submitbtn = document.getElementById('#submitForm');
 
-const uriBase = 'https://westcentralus.api.cognitive.microsoft.com/face/v1.0/detect';
 
-//Change the image url
-const imageUrl = document.getElementById('#InputUrl');
-
-submitbtn.addEventListener('click', function name(params) {
+$('#submitForm').addEventListener('click', function (params) {
   console.log('click');
 
+  const uriBase = 'https://westcentralus.api.cognitive.microsoft.com/face/v1.0/detect';
+
   // available parameters age, gender, hair, makeup, headpose, occlusion, emotion
-  const params = {
+  var params = {
     'returnFaceId': 'true',
     'returnFaceLandmarks': 'false',
     'returnFaceAttributes': 'age,gender,emotion'
   };
 
-  const options = {
-    uri: uriBase,
-    qs: params,
-    body: '{"url": ' + '"' + imageUrl + '"}',
-    headers: {
-      'Content-Type': 'application/json',
-      'Ocp-Apim-Subscription-Key': subscriptionKey
-    }
-  };
+  let imageUrl = document.getElementById("inputUrl").value;
 
-  request.post(options, (error, response, body) => {
+  $a.ajax({
+    url: uriBase + '?' + $.param(params),
+
+    beforeSend: function (xhrObj) {
+      xhrObj.setRequestHeader("Content-Type", "application/json");
+      xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", subscriptionKey);
+    },
+
+    type: "POST",
+    data: '{"url": ' + '"' + imageUrl + '"}',
+  });
+
+  .done(function (data) {
     if (error) {
       console.log('Error: ', error);
       return;
     };
 
-    let jsonResponse = JSON.parse(body);
+    let jsonResponse = JSON.parse(data);
     let group = [];
     let moodindex = 0;
 
@@ -75,6 +77,5 @@ submitbtn.addEventListener('click', function name(params) {
 
     console.log('This image includes:');
     console.log(group);
-
   });
 });
