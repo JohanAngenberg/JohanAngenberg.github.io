@@ -63,10 +63,10 @@ $(document).ready(function () {
               agegroup = 'older than 55 years of age';
               break;
           };
-          person = `<li class="list-group-item">a ${p.faceAttributes.gender} ${agegroup} feeling ${moodArr[moodindex]}</li>`;
           moodindex = emotions.indexOf(Math.max(...emotions));
-          responselist.append(person);
+          person += `<li class="list-group-item">a ${p.faceAttributes.gender} ${agegroup} feeling ${moodArr[moodindex]}</li>`;
         });
+        $('#.list-group').html(person);
       })
 
       .fail(function () {
