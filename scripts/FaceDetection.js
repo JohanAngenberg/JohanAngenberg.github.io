@@ -34,8 +34,8 @@ $(document).ready(function () {
         console.log(data);
 
         let jsonResponse = data;
-        let group = [];
         let moodindex = 0;
+        let person;
 
         jsonResponse.forEach(function (p) {
           let emotions = [p.faceAttributes.emotion.anger, p.faceAttributes.emotion.contempt, p.faceAttributes.emotion.disgust, p.faceAttributes.emotion.fear, p.faceAttributes.emotion.happiness, p.faceAttributes.emotion.neutral, p.faceAttributes.emotion.sadness, p.faceAttributes.emotion.surprise];
@@ -63,16 +63,13 @@ $(document).ready(function () {
               agegroup = 'older than 55 years of age';
               break;
           };
-
+          person = `<li class="list-group-item">a ${p.faceAttributes.gender} ${agegroup} feeling ${moodArr[moodindex]}</li>`;
           moodindex = emotions.indexOf(Math.max(...emotions));
-          responselist.append(`<li class="list-group-item">a ${p.faceAttributes.gender} ${agegroup} feeling ${moodArr[moodindex]}</li>`)
+          responselist.append(html);
         });
-        console.log('This image includes:');
-        console.log(group);
       })
 
       .fail(function () {
-        console.log(subscriptionKey.value);
         console.log('fail');
       })
 
