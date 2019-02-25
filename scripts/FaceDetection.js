@@ -66,7 +66,7 @@ $(document).ready(function () {
           moodindex = emotions.indexOf(Math.max(...emotions));
           person += `<li class="list-group-item">a ${p.faceAttributes.gender} ${agegroup} feeling ${moodArr[moodindex]}</li>`;
         });
-        $('#.list-group').html(person);
+        $('.list-group').html(person);
       })
 
       .fail(function () {
