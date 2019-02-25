@@ -2,7 +2,6 @@ $(document).ready(function () {
   const subscriptionKey = document.getElementById('InputKey');
   const submitbtn = document.getElementById('submitForm');
   let imageUrl = document.getElementById("InputUrl");
-  let responselist = document.querySelector(".list-group")
 
 
   submitbtn.addEventListener('click', function (params) {
@@ -29,9 +28,6 @@ $(document).ready(function () {
       data: '{"url": ' + '"' + imageUrl.value + '"}'
     })
       .done(function (data) {
-        console.log(subscriptionKey);
-
-        console.log(data);
 
         let jsonResponse = data;
         let moodindex = 0;
@@ -43,6 +39,8 @@ $(document).ready(function () {
           let personAge = parseInt(p.faceAttributes.age);
           let agegroup = '';
 
+
+          //assign person to agegroup
           switch (true) {
             case (personAge <= 3):
               agegroup = 'toddler';
@@ -63,7 +61,11 @@ $(document).ready(function () {
               agegroup = 'older than 55 years of age';
               break;
           };
+
+          //assign person a major emotion based on facial expressions.
           moodindex = emotions.indexOf(Math.max(...emotions));
+
+          //Adds person to the string later being appended to HTML
           person += `<li class="list-group-item">a ${p.faceAttributes.gender} ${agegroup} feeling ${moodArr[moodindex]}</li>`;
         });
         $('.list-group').html(person);
