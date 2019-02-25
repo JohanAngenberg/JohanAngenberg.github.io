@@ -3,6 +3,7 @@ jQuery
 const subscriptionKey = document.getElementById('InputKey');
 const submitbtn = document.getElementById('submitForm');
 let imageUrl = document.getElementById("inputUrl");
+let responselist = document.querySelector(".list-group")
 
 
 submitbtn.addEventListener('click', function (params) {
@@ -26,7 +27,10 @@ submitbtn.addEventListener('click', function (params) {
 
     type: "POST",
     data: '{"url": ' + '"' + imageUrl + '"}',
-    success: function (data) {
+  })
+    .done(function (data) {
+      console.log(data);
+
       let jsonResponse = JSON.parse(data);
       let group = [];
       let moodindex = 0;
@@ -59,12 +63,15 @@ submitbtn.addEventListener('click', function (params) {
         };
 
         moodindex = emotions.indexOf(Math.max(...emotions));
-        $('.list-group').append(`<li class="list-group-item">a ${p.faceAttributes.gender} ${agegroup} feeling ${moodArr[moodindex]}</li>`)
+        responselist.append(`<li class="list-group-item">a ${p.faceAttributes.gender} ${agegroup} feeling ${moodArr[moodindex]}</li>`)
       });
       console.log('This image includes:');
       console.log(group);
-    }
-  });
+    })
+
+    .fail(function () {
+      console.log('fail');
+    })
 });
 
 
