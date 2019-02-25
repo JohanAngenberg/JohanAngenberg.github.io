@@ -34,7 +34,7 @@ submitbtn.addEventListener('click', function (params) {
 
       console.log(data);
 
-      let jsonResponse = JSON.parse(data);
+      let jsonResponse = data;
       let group = [];
       let moodindex = 0;
 
