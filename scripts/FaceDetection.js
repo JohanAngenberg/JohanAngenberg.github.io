@@ -2,7 +2,7 @@ jQuery
 
 const subscriptionKey = document.getElementById('InputKey');
 const submitbtn = document.getElementById('submitForm');
-let imageUrl = document.getElementById("inputUrl");
+let imageUrl = document.getElementById("inputUrl").value;
 let responselist = document.querySelector(".list-group")
 
 
@@ -22,13 +22,15 @@ submitbtn.addEventListener('click', function (params) {
 
     beforeSend: function (xhrObj) {
       xhrObj.setRequestHeader("Content-Type", "application/json");
-      xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", subscriptionKey);
+      xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", subscriptionKey.value);
     },
 
     type: "POST",
     data: '{"url": ' + '"' + imageUrl + '"}'
   })
     .done(function (data) {
+      console.log(subscriptionKey);
+
       console.log(data);
 
       let jsonResponse = JSON.parse(data);
@@ -70,8 +72,10 @@ submitbtn.addEventListener('click', function (params) {
     })
 
     .fail(function () {
+      console.log(subscriptionKey.value);
       console.log('fail');
     })
+
 });
 
 
