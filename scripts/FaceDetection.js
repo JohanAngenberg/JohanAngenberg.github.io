@@ -35,7 +35,7 @@ $(document).ready(function () {
 
         let jsonResponse = data;
         let moodindex = 0;
-        let person;
+        let person = '';
 
         jsonResponse.forEach(function (p) {
           let emotions = [p.faceAttributes.emotion.anger, p.faceAttributes.emotion.contempt, p.faceAttributes.emotion.disgust, p.faceAttributes.emotion.fear, p.faceAttributes.emotion.happiness, p.faceAttributes.emotion.neutral, p.faceAttributes.emotion.sadness, p.faceAttributes.emotion.surprise];
@@ -65,7 +65,7 @@ $(document).ready(function () {
           };
           person = `<li class="list-group-item">a ${p.faceAttributes.gender} ${agegroup} feeling ${moodArr[moodindex]}</li>`;
           moodindex = emotions.indexOf(Math.max(...emotions));
-          responselist.append(html);
+          responselist.append(person);
         });
       })
 
