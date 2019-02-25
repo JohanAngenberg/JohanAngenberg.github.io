@@ -8,7 +8,7 @@ let responselist = document.querySelector(".list-group")
 
 submitbtn.addEventListener('click', function (params) {
   console.log('click');
-  console.log(imageUrl.value);
+  console.log(imageUrl);
 
   const uriBase = 'https://westcentralus.api.cognitive.microsoft.com/face/v1.0/detect';
 
