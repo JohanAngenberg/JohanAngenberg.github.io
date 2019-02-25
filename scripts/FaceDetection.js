@@ -1,13 +1,11 @@
-'use strict';
-let imageUrl = $()
-//const request = require('request');
+jQuery
 
-//Insert apikey below
-const subscriptionKey = document.getElementById('#InputKey');
-const submitbtn = document.getElementById('#submitForm');
+const subscriptionKey = document.getElementById('InputKey');
+const submitbtn = document.getElementById('submitForm');
+let imageUrl = document.getElementById("inputUrl");
 
 
-$('#submitForm').addEventListener('click', function (params) {
+submitbtn.addEventListener('click', function (params) {
   console.log('click');
 
   const uriBase = 'https://westcentralus.api.cognitive.microsoft.com/face/v1.0/detect';
@@ -19,9 +17,7 @@ $('#submitForm').addEventListener('click', function (params) {
     'returnFaceAttributes': 'age,gender,emotion'
   };
 
-  let imageUrl = document.getElementById("inputUrl").value;
-
-  $a.ajax({
+  $.ajax({
     url: uriBase + '?' + $.param(params),
 
     beforeSend: function (xhrObj) {
@@ -31,51 +27,45 @@ $('#submitForm').addEventListener('click', function (params) {
 
     type: "POST",
     data: '{"url": ' + '"' + imageUrl + '"}',
-  });
+    success: function (data) {
+      let jsonResponse = JSON.parse(data);
+      let group = [];
+      let moodindex = 0;
 
-  .done(function (data) {
-    if (error) {
-      console.log('Error: ', error);
-      return;
-    };
+      jsonResponse.forEach(function (p) {
+        let emotions = [p.faceAttributes.emotion.anger, p.faceAttributes.emotion.contempt, p.faceAttributes.emotion.disgust, p.faceAttributes.emotion.fear, p.faceAttributes.emotion.happiness, p.faceAttributes.emotion.neutral, p.faceAttributes.emotion.sadness, p.faceAttributes.emotion.surprise];
+        let moodArr = ['anger', 'contempt', 'disgust', 'fear', 'happy', 'neutral', 'sad', 'surprised'];
+        let personAge = parseInt(p.faceAttributes.age);
+        let agegroup = '';
 
-    let jsonResponse = JSON.parse(data);
-    let group = [];
-    let moodindex = 0;
+        switch (true) {
+          case (personAge <= 3):
+            agegroup = 'toddler';
+            break;
+          case (personAge <= 12):
+            agegroup = 'child';
+            break;
+          case (personAge <= 19):
+            agegroup = 'teenager';
+            break;
+          case (personAge <= 35):
+            agegroup = 'young adult';
+            break;
+          case (personAge < 55):
+            agegroup = 'middle-aged adult';
+            break;
+          default:
+            agegroup = 'older than 55 years of age';
+            break;
+        };
 
-    jsonResponse.forEach(function (p) {
-      let emotions = [p.faceAttributes.emotion.anger, p.faceAttributes.emotion.contempt, p.faceAttributes.emotion.disgust, p.faceAttributes.emotion.fear, p.faceAttributes.emotion.happiness, p.faceAttributes.emotion.neutral, p.faceAttributes.emotion.sadness, p.faceAttributes.emotion.surprise];
-      let moodArr = ['anger', 'contempt', 'disgust', 'fear', 'happy', 'neutral', 'sad', 'surprised'];
-      let personAge = parseInt(p.faceAttributes.age);
-      let agegroup = '';
-
-      switch (true) {
-        case (personAge <= 3):
-          agegroup = 'toddler';
-          break;
-        case (personAge <= 12):
-          agegroup = 'child';
-          break;
-        case (personAge <= 19):
-          agegroup = 'teenager';
-          break;
-        case (personAge <= 35):
-          agegroup = 'young adult';
-          break;
-        case (personAge < 55):
-          agegroup = 'middle-aged adult';
-          break;
-        default:
-          agegroup = 'older than 55 years of age';
-          break;
-      };
-
-      moodindex = emotions.indexOf(Math.max(...emotions));
-
-      group.push(`a ${p.faceAttributes.gender} ${agegroup} feeling ${moodArr[moodindex]}`);
-    });
-
-    console.log('This image includes:');
-    console.log(group);
+        moodindex = emotions.indexOf(Math.max(...emotions));
+        $('.list-group').append(`<li class="list-group-item">a ${p.faceAttributes.gender} ${agegroup} feeling ${moodArr[moodindex]}</li>`)
+      });
+      console.log('This image includes:');
+      console.log(group);
+    }
   });
 });
+
+
