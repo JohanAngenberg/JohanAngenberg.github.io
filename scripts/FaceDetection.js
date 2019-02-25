@@ -26,7 +26,7 @@ submitbtn.addEventListener('click', function (params) {
     },
 
     type: "POST",
-    data: '{"url": ' + '"' + imageUrl + '"}',
+    data: '{"url": ' + '"' + imageUrl + '"}'
   })
     .done(function (data) {
       console.log(data);
