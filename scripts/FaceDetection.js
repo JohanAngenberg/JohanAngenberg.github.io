@@ -2,7 +2,7 @@ jQuery
 
 const subscriptionKey = document.getElementById('InputKey');
 const submitbtn = document.getElementById('submitForm');
-let imageUrl = document.getElementById("inputUrl").value;
+let imageUrl = document.getElementById("inputUrl");
 let responselist = document.querySelector(".list-group")
 
 
@@ -26,7 +26,7 @@ submitbtn.addEventListener('click', function (params) {
     },
 
     type: "POST",
-    data: '{"url": ' + '"' + imageUrl + '"}'
+    data: '{"url": ' + '"' + imageUrl.value + '"}'
   })
     .done(function (data) {
       console.log(subscriptionKey);
